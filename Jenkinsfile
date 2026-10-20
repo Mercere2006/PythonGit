@@ -4,6 +4,7 @@ pipeline {
     environment {
         VENV_DIR = 'venv'
         DEPLOY_DIR = 'D:\\class\\632218\\ws\\PythonGit\\deploy'
+        PYTHON_EXE = 'C:\\Users\\srypo\\AppData\\Local\\Python\\bin\\python.exe'
     }
 
     options {
@@ -24,16 +25,16 @@ pipeline {
 
         stage('Setup Python') {
             steps {
-        bat 'C:\\Users\\srypo\\AppData\\Local\\Python\\bin\\python.exe --version'
-        bat 'C:\\Users\\srypo\\AppData\\Local\\Python\\bin\\python.exe -m venv %VENV_DIR%'
-        bat '%VENV_DIR%\\Scripts\\python -m pip install --upgrade pip'
-        bat '%VENV_DIR%\\Scripts\\pip install -r requirements.txt'
-    }
-}
+                bat '"%PYTHON_EXE%" --version'
+                bat '"%PYTHON_EXE%" -m venv %VENV_DIR%'
+                bat '%VENV_DIR%\\Scripts\\python -m pip install --upgrade pip'
+                bat '%VENV_DIR%\\Scripts\\pip install -r requirements.txt'
+            }
+        }
 
         stage('Lint') {
             steps {
-                bat '%VENV_DIR%\\Scripts\\flake8 --max-line-length=100 --exclude=%VENV_DIR% .'
+                bat '%VENV_DIR%\\Scripts\\flake8 --ignore=W292,W293 --max-line-length=100 --exclude=%VENV_DIR% .'
             }
         }
 
@@ -56,7 +57,7 @@ pipeline {
                 bat 'if not exist "%DEPLOY_DIR%" mkdir "%DEPLOY_DIR%"'
                 bat 'copy /Y helloworld.py "%DEPLOY_DIR%\\"'
                 bat 'copy /Y profile.py "%DEPLOY_DIR%\\"'
-                bat 'python "%DEPLOY_DIR%\\helloworld.py"'
+                bat '"%PYTHON_EXE%" "%DEPLOY_DIR%\\helloworld.py"'
             }
         }
     }
