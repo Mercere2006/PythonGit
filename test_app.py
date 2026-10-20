@@ -20,3 +20,4 @@ def test_profile_runs_and_prints_profile():
     result = run_script("profile.py")
     assert result.returncode == 0
     assert "profile" in result.stdout
+    
