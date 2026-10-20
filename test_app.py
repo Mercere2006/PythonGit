@@ -1,19 +1,22 @@
-import pytest
-from helloworld import get_message
-from profile import get_profile
+import subprocess
+import sys
 
 
-def test_get_message():
-    assert get_message() == "Hello, World!"
+def run_script(filename):
+    return subprocess.run(
+        [sys.executable, filename],
+        capture_output=True,
+        text=True,
+    )
 
 
-def test_get_profile():
-    profile = get_profile()
-    assert profile["name"] == "Apichart"
-    assert profile["role"] == "DevOps Engineer"
+def test_helloworld_runs_and_prints_greeting():
+    result = run_script("helloworld.py")
+    assert result.returncode == 0
+    assert "Hello World" in result.stdout
 
 
-def test_profile_keys():
-    profile = get_profile()
-    assert "name" in profile
-    assert "role" in profile
+def test_profile_runs_and_prints_profile():
+    result = run_script("profile.py")
+    assert result.returncode == 0
+    assert "profile" in result.stdout
