@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         VENV_DIR = 'venv'
-        DEPLOY_DIR = 'D:\\BackupFromG\\SAU\\class\\632218\\ws\\jenkins1\\deploy'
+        DEPLOY_DIR = 'D:\\class\\632218\\ws\\PythonGit\\deploy'
     }
 
     options {
@@ -24,12 +24,12 @@ pipeline {
 
         stage('Setup Python') {
             steps {
-                bat 'python --version'
-                bat 'python -m venv %VENV_DIR%'
-                bat '%VENV_DIR%\\Scripts\\python -m pip install --upgrade pip'
-                bat '%VENV_DIR%\\Scripts\\pip install -r requirements.txt'
-            }
-        }
+        bat 'C:\\Users\\srypo\\AppData\\Local\\Python\\bin\\python.exe --version'
+        bat 'C:\\Users\\srypo\\AppData\\Local\\Python\\bin\\python.exe -m venv %VENV_DIR%'
+        bat '%VENV_DIR%\\Scripts\\python -m pip install --upgrade pip'
+        bat '%VENV_DIR%\\Scripts\\pip install -r requirements.txt'
+    }
+}
 
         stage('Lint') {
             steps {
